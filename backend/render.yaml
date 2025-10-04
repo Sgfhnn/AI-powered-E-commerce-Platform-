@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: ai-ecommerce-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build && npm run db:setup
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-ecommerce-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+
+databases:
+  - name: ai-ecommerce-db
+    databaseName: ai_ecommerce
+    user: ai_ecommerce_user
+    plan: free
