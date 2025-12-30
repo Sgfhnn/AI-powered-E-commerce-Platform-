@@ -1,4 +1,10 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { Product } from '@/types'
+import ProductGrid from '@/components/ProductGrid'
 
 async function getProducts(searchParams: Record<string, string>): Promise<{ products: Product[], total: number }> {
   try {
