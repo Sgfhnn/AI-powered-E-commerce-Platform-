@@ -6,17 +6,17 @@ A modern, full-stack e-commerce platform built with Next.js, TypeScript, and Sup
 
 ### 🛍️ Core E-commerce
 - **Product Catalog**: Browse products with advanced filtering and search
-- **Shopping Cart**: Add, remove, and manage cart items with persistent storage in Supabase
+- **Shopping Cart**: Real-time cart management with persistent storage in Supabase
 - **User Authentication**: Secure authentication powered by Supabase Auth
 - **Order Management**: Complete order lifecycle from cart to delivery
 - **Payment Integration**: Secure payment processing with Stripe
 
 ### 🤖 AI-Powered Features
 - **Intelligent Search**: Enhanced search with natural language processing using Google Gemini
-- **Smart Recommendations**: AI-driven product suggestions (Coming Soon)
+- **Chat Support**: Intelligent shopping assistant using Google Gemini
 - **Personalization**: Customized shopping experience for each user
 
-### � Technical Features
+### 🚀 Technical Features
 - **Serverless Architecture**: Fully migrated to Supabase and Next.js API Routes
 - **Responsive Design**: Mobile-first design that works on all devices
 - **Real-time Updates**: Live notifications and updates via Supabase Realtime
@@ -25,12 +25,10 @@ A modern, full-stack e-commerce platform built with Next.js, TypeScript, and Sup
 
 ## 🛠️ Tech Stack
 
-### Frontend & Backend (Full Stack)
+### Framework & Language
 - **Next.js 14** - React framework with App Router & API Routes
 - **TypeScript** - Type-safe development
 - **Tailwind CSS** - Utility-first CSS framework
-- **Headless UI** - Accessible UI components
-- **Heroicons** - Beautiful SVG icons
 
 ### Database & Auth
 - **Supabase** - Backend-as-a-Service (PostgreSQL, Auth, Storage)
@@ -40,3 +38,59 @@ A modern, full-stack e-commerce platform built with Next.js, TypeScript, and Sup
 - **Google Gemini API** - AI-powered search and intelligence
 - **Stripe** - Secure payment processing
 
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- A Supabase project
+- A Stripe account
+- A Google AI (Gemini) API key
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Sgfhnn/AI-powered-E-commerce-Platform-.git
+   cd AI-powered-E-commerce-Platform-
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables**
+   Copy `.env.example` to `.env.local` and fill in your credentials:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+## 📦 Project Structure
+
+```
+├── app/                    # Next.js App Router pages & API routes
+│   ├── api/                # Serverless API routes (Search, Checkout, Webhooks)
+│   ├── cart/              # Shopping cart page
+│   ├── products/          # Product listing and detail pages
+│   ├── orders/            # Order history page
+│   ├── search/            # AI search page
+│   └── profile/           # User profile management
+├── components/            # Reusable UI components
+├── contexts/             # React Contexts (Auth, Cart)
+├── lib/                  # Utility functions and shared clients (Supabase, Stripe)
+├── types/                # TypeScript type definitions
+└── public/              # Static assets
+```
+
+## 🛡️ Security
+
+This project uses **Supabase Row Level Security (RLS)** to ensure that users can only access their own data. Make sure to enable RLS on your Supabase tables and set up appropriate policies.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
