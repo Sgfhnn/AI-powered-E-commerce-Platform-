@@ -1,0 +1,16 @@
+{
+  "name": "ai-powered-ecommerce-platform",
+  "version": "1.0.0",
+  "description": "AI-powered e-commerce platform with Next.js and Supabase",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm start",
+    "install:all": "npm install && cd frontend && npm install",
+    "lint": "cd frontend && npm run lint"
+  },
+  "workspaces": [
+    "frontend"
+  ]
+}
