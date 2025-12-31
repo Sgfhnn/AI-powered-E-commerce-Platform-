@@ -38,59 +38,12 @@ A modern, full-stack e-commerce platform built with Next.js, TypeScript, and Sup
 - **Google Gemini API** - AI-powered search and intelligence
 - **Stripe** - Secure payment processing
 
-## 🚀 Getting Started
 
-### Prerequisites
-- Node.js 18+
-- A Supabase project
-- A Stripe account
-- A Google AI (Gemini) API key
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Sgfhnn/AI-powered-E-commerce-Platform-.git
-   cd AI-powered-E-commerce-Platform-
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Configure Environment Variables**
-   Copy `.env.example` to `.env.local` and fill in your credentials:
-   ```bash
-   cp .env.example .env.local
-   ```
-
-4. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-
-## 📦 Project Structure
-
-```
-├── app/                    # Next.js App Router pages & API routes
-│   ├── api/                # Serverless API routes (Search, Checkout, Webhooks)
-│   ├── cart/              # Shopping cart page
-│   ├── products/          # Product listing and detail pages
-│   ├── orders/            # Order history page
-│   ├── search/            # AI search page
-│   └── profile/           # User profile management
-├── components/            # Reusable UI components
-├── contexts/             # React Contexts (Auth, Cart)
-├── lib/                  # Utility functions and shared clients (Supabase, Stripe)
-├── types/                # TypeScript type definitions
-└── public/              # Static assets
-```
 
 ## 🛡️ Security
 
 This project uses **Supabase Row Level Security (RLS)** to ensure that users can only access their own data. Make sure to enable RLS on your Supabase tables and set up appropriate policies.
 
-## 📄 License
+📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
