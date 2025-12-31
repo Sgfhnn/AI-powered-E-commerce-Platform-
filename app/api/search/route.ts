@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server'
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { supabase } from '@/lib/supabase'
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)
-
 export async function POST(req: Request) {
   try {
     const { query } = await req.json()
@@ -11,6 +9,13 @@ export async function POST(req: Request) {
     if (!query) {
       return NextResponse.json({ error: 'Query is required' }, { status: 400 })
     }
+
+    // Initialize Gemini AI at runtime (not build time) to avoid missing env var errors
+    const apiKey = process.env.GOOGLE_AI_API_KEY
+    if (!apiKey) {
+      return NextResponse.json({ error: 'AI search is not configured' }, { status: 503 })
+    }
+    const genAI = new GoogleGenerativeAI(apiKey)
 
     // 1. Use Gemini to "understand" the query and generate search terms
     const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
@@ -24,13 +29,13 @@ export async function POST(req: Request) {
     `
 
     const result = await model.generateContent(prompt)
-    const keywords = result.response.text().split(',').map(k => k.trim())
+    const keywords = result.response.text().split(',').map((k: string) => k.trim())
 
     // 2. Query Supabase using the keywords
     // We'll use a simple OR filter for now, but we could do more complex matching
     let supabaseQuery = supabase.from('products').select('*')
 
-    const filterStrings = keywords.map(k => `title.ilike.%${k}%,description.ilike.%${k}%`)
+    const filterStrings = keywords.map((k: string) => `title.ilike.%${k}%,description.ilike.%${k}%`)
     const { data: products, error } = await supabaseQuery.or(filterStrings.join(','))
 
     if (error) throw error
