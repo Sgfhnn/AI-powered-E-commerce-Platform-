@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { User as SupabaseUser } from '@supabase/supabase-js'
+import { User as SupabaseUser, AuthChangeEvent, Session } from '@supabase/supabase-js'
 
 interface User {
   id: string
@@ -44,12 +44,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setData()
 
     // Listen for changes on auth state (logged in, signed out, etc.)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
       if (session?.user) {
         setUser({
           id: session.user.id,
           email: session.user.email || '',
-          name: session.user.user_metadata?.name
+          name: session.user.user_metadata?.name,
+          created_at: session.user.created_at
         })
       } else {
         setUser(null)
