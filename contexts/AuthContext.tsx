@@ -8,6 +8,7 @@ interface User {
   id: string
   email: string
   name?: string
+  created_at?: string
 }
 
 interface AuthContextType {
@@ -33,7 +34,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser({
           id: session.user.id,
           email: session.user.email || '',
-          name: session.user.user_metadata?.name
+          name: session.user.user_metadata?.name,
+          created_at: session.user.created_at
         })
       }
       setLoading(false)
