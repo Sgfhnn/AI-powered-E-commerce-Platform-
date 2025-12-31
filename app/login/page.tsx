@@ -15,7 +15,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!email || !password) {
       toast.error('Please fill in all fields')
       return
@@ -47,7 +47,7 @@ export default function LoginPage() {
             </Link>
           </p>
         </div>
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
@@ -66,7 +66,7 @@ export default function LoginPage() {
                 placeholder="Enter your email"
               />
             </div>
-            
+
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
@@ -82,6 +82,12 @@ export default function LoginPage() {
                 className="input-field mt-1"
                 placeholder="Enter your password"
               />
+            </div>
+
+            <div className="flex items-center justify-end">
+              <Link href="/forgot-password" className="text-sm text-primary-600 hover:text-primary-500">
+                Forgot your password?
+              </Link>
             </div>
           </div>
 
