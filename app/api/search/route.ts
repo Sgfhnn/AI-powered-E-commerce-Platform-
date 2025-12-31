@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { GoogleGenerativeAI } from '@google/generative-ai'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 
 export async function POST(req: Request) {
   try {
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
     // 2. Query Supabase using the keywords
     // We'll use a simple OR filter for now, but we could do more complex matching
-    let supabaseQuery = supabase.from('products').select('*')
+    let supabaseQuery = getSupabase().from('products').select('*')
 
     const filterStrings = keywords.map((k: string) => `title.ilike.%${k}%,description.ilike.%${k}%`)
     const { data: products, error } = await supabaseQuery.or(filterStrings.join(','))
