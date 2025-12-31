@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -100,8 +100,8 @@ export default function OrdersPage() {
       if (error) throw error
 
       // Update the order status locally
-      setOrders(prevOrders =>
-        prevOrders.map(order =>
+      setOrders((prevOrders: Order[]) =>
+        prevOrders.map((order: Order) =>
           order.id === orderId
             ? { ...order, status: 'CANCELLED' }
             : order
@@ -165,7 +165,7 @@ export default function OrdersPage() {
         </div>
       ) : (
         <div className="space-y-6">
-          {orders.map((order) => (
+          {orders.map((order: Order) => (
             <div key={order.id} className="bg-white rounded-lg shadow-md overflow-hidden">
               {/* Order Header */}
               <div className="bg-gray-50 px-6 py-4 border-b">
@@ -198,7 +198,7 @@ export default function OrdersPage() {
               <div className="p-6">
                 <h3 className="text-lg font-semibold mb-4">Items ({order.order_items.length})</h3>
                 <div className="space-y-4">
-                  {order.order_items.map((item) => (
+                  {order.order_items.map((item: any) => (
                     <div key={item.id} className="flex items-center space-x-4">
                       <div className="relative w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                         <Image
@@ -264,7 +264,7 @@ export default function OrdersPage() {
       {/* Confirmation Modal */}
       <ConfirmModal
         isOpen={confirmModal.isOpen}
-        onClose={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
+        onClose={() => setConfirmModal((prev: any) => ({ ...prev, isOpen: false }))}
         onConfirm={confirmModal.onConfirm}
         title={confirmModal.title}
         message={confirmModal.message}
