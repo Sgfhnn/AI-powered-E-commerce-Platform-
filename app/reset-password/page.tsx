@@ -9,23 +9,56 @@ export default function ResetPasswordPage() {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const [checking, setChecking] = useState(true)
     const [validSession, setValidSession] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
-        // Check if user came from a valid reset link
-        const checkSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession()
-            if (session) {
-                setValidSession(true)
+        // Handle the auth callback from Supabase
+        const handleAuthCallback = async () => {
+            try {
+                // Check URL hash for access token (Supabase sends tokens in the hash)
+                const hashParams = new URLSearchParams(window.location.hash.substring(1))
+                const accessToken = hashParams.get('access_token')
+                const refreshToken = hashParams.get('refresh_token')
+                const type = hashParams.get('type')
+
+                if (accessToken && type === 'recovery') {
+                    // Set the session using the tokens from the URL
+                    const { data, error } = await supabase.auth.setSession({
+                        access_token: accessToken,
+                        refresh_token: refreshToken || '',
+                    })
+
+                    if (error) {
+                        console.error('Session error:', error)
+                        setValidSession(false)
+                    } else if (data.session) {
+                        setValidSession(true)
+                        // Clean up the URL
+                        window.history.replaceState(null, '', '/reset-password')
+                    }
+                } else {
+                    // Check if there's already an active session
+                    const { data: { session } } = await supabase.auth.getSession()
+                    if (session) {
+                        setValidSession(true)
+                    }
+                }
+            } catch (error) {
+                console.error('Auth callback error:', error)
+            } finally {
+                setChecking(false)
             }
         }
-        checkSession()
 
-        // Listen for auth state changes (when user clicks the reset link)
+        handleAuthCallback()
+
+        // Also listen for auth state changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-            if (event === 'PASSWORD_RECOVERY') {
+            if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') {
                 setValidSession(true)
+                setChecking(false)
             }
         })
 
@@ -59,13 +92,27 @@ export default function ResetPasswordPage() {
 
             if (error) throw error
 
-            toast.success('Password updated successfully!')
+            // Sign out after password change to force fresh login
+            await supabase.auth.signOut()
+
+            toast.success('Password updated successfully! Please log in with your new password.')
             router.push('/login')
         } catch (error: any) {
             toast.error(error.message || 'Failed to reset password')
         } finally {
             setLoading(false)
         }
+    }
+
+    if (checking) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Verifying your reset link...</p>
+                </div>
+            </div>
+        )
     }
 
     if (!validSession) {
@@ -115,7 +162,7 @@ export default function ResetPasswordPage() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="input-field mt-1"
-                                placeholder="Enter new password"
+                                placeholder="Enter new password (min 6 characters)"
                             />
                         </div>
 
