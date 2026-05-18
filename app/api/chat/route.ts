@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       // Import Gemini AI
       const { GoogleGenerativeAI } = await import('@google/generative-ai')
       const genAI = new GoogleGenerativeAI(apiKey)
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' })
 
       // Create a context-aware prompt for e-commerce
       const prompt = `You are an intelligent shopping assistant for an AI-powered e-commerce platform. 
