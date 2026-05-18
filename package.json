@@ -9,16 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.2.1",
+    "@google/generative-ai": "^0.24.1",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.2.0",
-    "@supabase/supabase-js": "^2.39.0",
     "@stripe/stripe-js": "^2.1.11",
-    "stripe": "^14.14.0",
+    "@supabase/supabase-js": "^2.39.0",
     "js-cookie": "^3.0.5",
     "next": "14.0.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "stripe": "^14.14.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",

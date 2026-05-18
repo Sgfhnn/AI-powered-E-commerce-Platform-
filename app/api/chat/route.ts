@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       // Import Gemini AI
       const { GoogleGenerativeAI } = await import('@google/generative-ai')
       const genAI = new GoogleGenerativeAI(apiKey)
-      const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
 
       // Create a context-aware prompt for e-commerce
       const prompt = `You are an intelligent shopping assistant for an AI-powered e-commerce platform. 
@@ -54,10 +54,11 @@ export async function POST(request: NextRequest) {
       const reply = response.text()
 
       return NextResponse.json({ reply })
-    } catch (geminiError) {
+    } catch (geminiError: any) {
       console.log('Gemini API failed, using fallback:', geminiError)
       return NextResponse.json({ 
-        reply: getFallbackResponse(message)
+        reply: getFallbackResponse(message),
+        debugError: geminiError?.message || String(geminiError)
       })
     }
 
